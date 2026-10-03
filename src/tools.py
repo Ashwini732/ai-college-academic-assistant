@@ -62,4 +62,4 @@ TOOLS = [calculator, days_until, get_event_date]
 if __name__ == "__main__":
     print(calculator.invoke("(8.5 * 4 + 9 * 3) / 7"))
     print(days_until.invoke("2026-12-01"))
-    print(get_event_date.invoke("semester exams"))
+    print(get_event_date.invoke("semester exams "))
