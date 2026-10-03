@@ -1,5 +1,7 @@
 # AI-Based College Academic Assistant
 
+An AI-based academic assistant designed to help college students access academic information, search college documents, answer academic questions, and create personalized study plans.
+
 ## Setup Instructions
 
 ### 1. Clone the Repository
@@ -10,8 +12,6 @@ cd ai-college-academic-assistant
 ```
 
 ### 2. Create a Virtual Environment
-
-For Windows:
 
 ```bash
 python -m venv .venv
@@ -25,94 +25,73 @@ Activate it:
 
 ### 3. Install Dependencies
 
-Install all required dependencies using:
-
 ```bash
 pip install -r requirements.txt
 ```
 
-The `requirements.txt` file contains the required Python libraries, so you do not need to install them individually.
-
 ### 4. Create the `.env` File
 
-Create a `.env` file in the project root directory.
-
-Add your OpenRouter API key:
+Create a `.env` file in the project root:
 
 ```env
 OPENROUTER_API_KEY=your_api_key_here
 ```
 
-Do not commit or push the `.env` file to GitHub.
+Do not commit `.env` to GitHub.
 
-### 5. Add the Documents
+### 5. Add Documents
 
-The academic PDF files are available in the `data` directory.
+Place the required PDF documents inside the `data/` folder.
 
-Keep the existing folder structure unchanged:
+## Create the Vector Database
+
+Run:
+
+```bash
+python src/create_embeddings.py
+```
+
+This automatically:
+
+1. Loads the PDF and website documents.
+2. Splits the documents into chunks.
+3. Creates embeddings using `BAAI/bge-small-en-v1.5`.
+4. Creates the Chroma vector database.
+
+Current result:
 
 ```text
-data/
-├── regulations/
-├── examinations/
-├── syllabus/
-├── internship/
-├── projects/
-├── academic_calendar/
-└── faq/
+1292 document chunks
 ```
 
-### 6. Run the Existing Files
-
-Run the files in the following order:
-
-#### Step 1 — Load Documents
-
-```bash
-python src/load_documents.py
-```
-
-#### Step 2 — Split Documents
-
-```bash
-python src/split_documents.py
-```
-
-#### Step 3 — Create Embeddings
-
-Run the embedding-generation file/notebook provided in the repository.
-
-**Current project progress is completed up to the `create_embeddings` stage.**
-
-The next person working on the project should continue from the stage after embedding generation.
-
----
-
-## Required Software
-
-Make sure you have:
-
-* Python 3.10+
-* Git
-* VS Code (recommended)
-
-Python dependencies are already listed in:
+The vector database is created in:
 
 ```text
-requirements.txt
+vector_db/
 ```
 
-Install them using:
+## Project Structure
 
-```bash
-pip install -r requirements.txt
+```text
+ai-college-academic-assistant/
+│
+├── data/
+│   └── academic documents
+│
+├── src/
+│   ├── load_documents.py
+│   ├── split_documents.py
+│   └── create_embeddings.py
+│
+├── vector_db/
+├── requirements.txt
+├── README.md
+└── .gitignore
 ```
 
----
+## Git Workflow
 
-## Git Workflow for Team Members
-
-Create your own branch before making changes:
+Create a separate branch:
 
 ```bash
 git checkout -b feature/your-feature-name
@@ -132,28 +111,40 @@ git commit -m "Add RAG retrieval"
 git push -u origin feature/rag-retrieval
 ```
 
-Then create a Pull Request to the `main` branch.
+Then create a Pull Request to `main`.
 
-### Important
+## Important
 
 * Do not work directly on `main`.
 * Do not commit `.env`.
 * Do not commit `.venv`.
-* Do not modify the existing document folders unnecessarily.
-* Pull the latest changes before starting your work.
+* Do not commit `vector_db/`.
+* Pull the latest changes before starting work.
 
----
-
-## Current Status
-
-Completed:
+## Current Progress
 
 ```text
-Document Loading
-       ↓
-Document Splitting
-       ↓
-Create Embeddings
+PDFs + Website
+      ↓
+Document Loading       ✓
+      ↓
+Document Splitting     ✓
+      ↓
+1292 Chunks            ✓
+      ↓
+BGE Embeddings         ✓
+      ↓
+Chroma Vector Database ✓
 ```
 
-**Next: Continue from the vector database / retrieval stage.**
+### Next Step
+
+```text
+Chroma Vector Database
+          ↓
+       Retriever
+          ↓
+      RAG Pipeline
+          ↓
+          LLM
+```
