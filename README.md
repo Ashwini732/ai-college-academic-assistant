@@ -43,7 +43,17 @@ Do not commit `.env` to GitHub.
 
 Place the required PDF documents inside the `data/` folder.
 
+
 ## Create the Vector Database
+Run the RAG Pipeline
+Run:
+python src/rag.py
+
+This executes the RAG pipeline by:
+1. Connecting to the existing Chroma vector database.
+2. Initializing the BAAI/bge-small-en-v1.5 embeddings retriever to fetch top 3 relevant chunks.
+3. Sending the retrieved context and question to openai/gpt-4o-mini via OpenRouter using ChatOpenAI.
+4. Returning strictly grounded answers with source document and page number references.
 
 Run:
 
@@ -81,9 +91,11 @@ ai-college-academic-assistant/
 ├── src/
 │   ├── load_documents.py
 │   ├── split_documents.py
-│   └── create_embeddings.py
+│   ├── create_embeddings.py
+|   └── rag.py
 │
 ├── vector_db/
+├── .env
 ├── requirements.txt
 ├── README.md
 └── .gitignore
@@ -135,6 +147,10 @@ Document Splitting     ✓
 BGE Embeddings         ✓
       ↓
 Chroma Vector Database ✓
+      ↓
+Retriever              ✓
+      ↓
+RAG + OpenRouter LLM   ✓
 ```
 
 ### Next Step
