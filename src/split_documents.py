@@ -1,29 +1,8 @@
-from pathlib import Path
-
-from langchain_community.document_loaders import PyPDFLoader
+from load_documents import documents
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 
-# Find the data folder
-DATA_FOLDER = Path(__file__).resolve().parent.parent / "data"
-
-documents = []
-
-# Load all PDF files from data folder
-for pdf_file in DATA_FOLDER.glob("*.pdf"):
-    print(f"Loading: {pdf_file.name}")
-
-    loader = PyPDFLoader(str(pdf_file))
-    docs = loader.load()
-
-    # Store the original filename in metadata
-    for doc in docs:
-        doc.metadata["source_file"] = pdf_file.name
-
-    documents.extend(docs)
-
-
-print("\nTotal pages loaded:", len(documents))
+print("\nTotal documents/pages loaded:", len(documents))
 
 
 # Create text splitter
@@ -32,7 +11,9 @@ text_splitter = RecursiveCharacterTextSplitter(
     chunk_overlap=200
 )
 
-# Split documents
+
+# Split all documents
+# This includes both PDFs and website content
 chunks = text_splitter.split_documents(documents)
 
 
@@ -44,7 +25,10 @@ print("\n--- Sample Chunks ---")
 
 for i, chunk in enumerate(chunks[:3]):
     print(f"\nChunk {i + 1}")
-    print("Source:", chunk.metadata.get("source_file"))
-    print("Page:", chunk.metadata.get("page"))
+
+    print("Source:", chunk.metadata.get("source"))
+    print("Source File:", chunk.metadata.get("source_file"))
+    print("Page:", chunk.metadata.get("page", "N/A"))
+
     print("Text:")
     print(chunk.page_content[:500])
