@@ -218,3 +218,7 @@ __marimo__/
 .streamlit/secrets.toml
 
 vector_db/
+vector_db/
+.venv/
+.env
+__pycache__/ 
