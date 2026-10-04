@@ -6,10 +6,10 @@ from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.graph import END, START, StateGraph
 
-from chains import ACADEMIC_PROMPT, SUMMARY_PROMPT
-from planner import build_plan, format_plan, update_details
-from rag import format_docs, llm, retriever
-from tools import ACADEMIC_EVENTS, calculator, days_until, get_event_date
+from src.chains import ACADEMIC_PROMPT, SUMMARY_PROMPT
+from src.planner import build_plan, format_plan, update_details
+from src.rag import format_docs, llm, retriever
+from src.tools import ACADEMIC_EVENTS, calculator, days_until, get_event_date
 
 NOT_AVAILABLE = "I'm sorry, but that information is not available in the uploaded college documents or website."
 ASK_DETAILS = (

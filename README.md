@@ -1,166 +1,107 @@
 # AI-Based College Academic Assistant
 
-An AI-based academic assistant designed to help college students access academic information, search college documents, answer academic questions, and create personalized study plans.
+An AI-powered college assistant using LLM, RAG, LangChain, LangGraph, FastAPI and React.
 
-## Setup Instructions
+## Features
 
-### 1. Clone the Repository
+- Academic Q&A using college documents
+- Document summarization
+- Calculator
+- Academic deadline calculation
+- Personalized study plan generation
+- Study plan modification
+- Handles unavailable information
 
-```bash
-git clone <REPOSITORY_URL>
-cd ai-college-academic-assistant
-```
+## Tech Stack
 
-### 2. Create a Virtual Environment
-
-```bash
-python -m venv .venv
-```
-
-Activate it:
-
-```bash
-.venv\Scripts\activate
-```
-
-### 3. Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-### 4. Create the `.env` File
-
-Create a `.env` file in the project root:
-
-```env
-OPENROUTER_API_KEY=your_api_key_here
-```
-
-Do not commit `.env` to GitHub.
-
-### 5. Add Documents
-
-Place the required PDF documents inside the `data/` folder.
-
-
-## Create the Vector Database
-Run the RAG Pipeline
-Run:
-python src/rag.py
-
-This executes the RAG pipeline by:
-1. Connecting to the existing Chroma vector database.
-2. Initializing the BAAI/bge-small-en-v1.5 embeddings retriever to fetch top 3 relevant chunks.
-3. Sending the retrieved context and question to openai/gpt-4o-mini via OpenRouter using ChatOpenAI.
-4. Returning strictly grounded answers with source document and page number references.
-
-Run:
-
-```bash
-python src/create_embeddings.py
-```
-
-This automatically:
-
-1. Loads the PDF and website documents.
-2. Splits the documents into chunks.
-3. Creates embeddings using `BAAI/bge-small-en-v1.5`.
-4. Creates the Chroma vector database.
-
-Current result:
-
-```text
-1292 document chunks
-```
-
-The vector database is created in:
-
-```text
-vector_db/
-```
+- Python
+- LangChain
+- LangGraph
+- ChromaDB
+- FastAPI
+- React + Vite
+- OpenRouter LLM
+- HuggingFace Embeddings
 
 ## Project Structure
 
-```text
 ai-college-academic-assistant/
-│
+├── api/
+│   └── main.py
 ├── data/
-│   └── academic documents
-│
 ├── src/
-│   ├── load_documents.py
-│   ├── split_documents.py
-│   ├── create_embeddings.py
-|   └── rag.py
-│
-├── vector_db/
-├── .env
+│   ├── chains.py
+│   ├── graph.py
+│   ├── planner.py
+│   ├── rag.py
+│   └── tools.py
+├── frontend/
 ├── requirements.txt
-├── README.md
-└── .gitignore
-```
+├── .env
+└── README.md
 
-## Git Workflow
+## Setup
 
-Create a separate branch:
+### 1. Clone the repository
 
-```bash
-git checkout -b feature/your-feature-name
-```
+git clone <REPOSITORY_URL>
+cd ai-college-academic-assistant
 
-Example:
+### 2. Create virtual environment
 
-```bash
-git checkout -b feature/rag-retrieval
-```
+python -m venv .venv
+.venv\Scripts\Activate.ps1
 
-After making changes:
+### 3. Install Python dependencies
 
-```bash
-git add .
-git commit -m "Add RAG retrieval"
-git push -u origin feature/rag-retrieval
-```
+pip install -r requirements.txt
 
-Then create a Pull Request to `main`.
+### 4. Create .env
+
+Create a `.env` file in the project root:
+
+OPENROUTER_API_KEY=your_api_key
+
+### 5. Run Backend
+
+From the project root:
+
+uvicorn api.main:app --reload
+
+Backend:
+http://127.0.0.1:8000
+
+API Documentation:
+http://127.0.0.1:8000/docs
+
+### 6. Run Frontend
+
+Open a second terminal:
+
+cd frontend
+npm install
+npm run dev
+
+Frontend:
+http://localhost:5173
+
+## Example Queries
+
+What is the minimum attendance requirement?
+
+Summarize the internship guidelines
+
+What is 25 * 4 + 10?
+
+How many days are left for semester exams?
+
+Make a study plan for Algorithms and Databases,
+3 hours a day, exam on 2026-11-20
+
+Give more time to Algorithms
 
 ## Important
 
-* Do not work directly on `main`.
-* Do not commit `.env`.
-* Do not commit `.venv`.
-* Do not commit `vector_db/`.
-* Pull the latest changes before starting work.
+Do not commit `.env` or `.venv`.
 
-## Current Progress
-
-```text
-PDFs + Website
-      ↓
-Document Loading       ✓
-      ↓
-Document Splitting     ✓
-      ↓
-1292 Chunks            ✓
-      ↓
-BGE Embeddings         ✓
-      ↓
-Chroma Vector Database ✓
-      ↓
-Retriever              ✓
-      ↓
-RAG + OpenRouter LLM   ✓
-```
-
-### Next Step
-
-```text
-Chroma Vector Database
-          ↓
-       Retriever
-          ↓
-      RAG Pipeline
-          ↓
-          LLM
-```
+Each team member must create their own `.env` file with their API key.
