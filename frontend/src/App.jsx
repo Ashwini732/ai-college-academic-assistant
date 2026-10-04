@@ -13,6 +13,11 @@ function App() {
 
     const currentQuestion = question.trim();
 
+    const history = messages.map((message) => ({
+      role: message.type === "user" ? "user" : "assistant",
+      text: message.text,
+    }));
+
     setMessages((prev) => [
       ...prev,
       {
@@ -32,6 +37,7 @@ function App() {
         },
         body: JSON.stringify({
           question: currentQuestion,
+          history,
         }),
       });
 
