@@ -50,6 +50,7 @@ cd ai-college-academic-assistant
 ### 2. Create virtual environment
 
 python -m venv .venv
+
 .venv\Scripts\Activate.ps1
 
 ### 3. Install Python dependencies
@@ -79,7 +80,9 @@ http://127.0.0.1:8000/docs
 Open a second terminal:
 
 cd frontend
+
 npm install
+
 npm run dev
 
 Frontend:
