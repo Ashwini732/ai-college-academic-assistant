@@ -1,7 +1,7 @@
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
-from src.rag import format_docs, llm, retriever
+from rag import format_docs, llm, retriever
 
 ACADEMIC_PROMPT = ChatPromptTemplate.from_template(
     """You are an AI-based College Academic Assistant.
